@@ -7,7 +7,7 @@ import './TextContainer.css';
 const TextContainer = ({ users }) => (
   <div className="textContainer">
     <div>
-      <h1>Welcome to {users[0].room}</h1>
+      {users[0] && <h1>Welcome to {users[0].room}</h1>}
       <p>This service is offered by FAVOURANT, </p>
       <p>
         Toronto's first QR-code, real-time communication app
