@@ -8,7 +8,7 @@ require("./models/chatRoomModel");
 //Server Imports
 const express = require('express');
 const cors = require('cors');
-const router = require('./router');
+const ownerRoute = require('./routes/ownerRoute');
 
 //Websocket Imports
 const socketio = require('socket.io');
@@ -18,7 +18,7 @@ const DATABASE_URL = config.DATABASE
 mongoose.connect(DATABASE_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
-}).catch(error => console.log(error.message));
+}).catch((err) => console.log(err.message));
 
 mongoose.connection.once("open", () => {
   console.log("MongoDB Connected!");
@@ -30,7 +30,8 @@ const Chatroom = mongoose.model("Chatroom");
 //Server Setup
 const app = express();
 app.use(cors());
-app.use(router);
+app.use(express.json()); //For body parsing
+app.use('/owner', ownerRoute);
 
 const server = app.listen(8000, () => {
   console.log("Server listening on port 8000")

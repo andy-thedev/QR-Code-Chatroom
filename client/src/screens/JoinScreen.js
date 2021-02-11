@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import './Join.css';
+import './screen.css';
 
 export default function SignIn() {
   const [name, setName] = useState('');

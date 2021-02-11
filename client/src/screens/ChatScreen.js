@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import io from "socket.io-client";
 
-import TextContainer from '../TextContainer/TextContainer';
-import Messages from '../Messages/Messages';
-import InfoBar from '../InfoBar/InfoBar';
-import Input from '../Input/Input';
+import TextContainer from '../components/TextContainer';
+import Messages from '../components/Messages';
+import InfoBar from '../components/InfoBar';
+import Input from '../components/Input';
 
-import './Chat.css';
+import './screen.css';
 
-const ENDPOINT = 'localhost:5000';
+const ENDPOINT = 'localhost:8000';
 
 let socket;
 
-const Chat = ({ location }) => {
+const ChatScreen = ({ location }) => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
@@ -65,4 +65,4 @@ const Chat = ({ location }) => {
   );
 }
 
-export default Chat;
+export default ChatScreen;
