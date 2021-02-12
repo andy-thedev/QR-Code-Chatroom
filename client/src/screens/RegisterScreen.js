@@ -13,8 +13,7 @@ function Register(props) {
     const history = useHistory();
 
     const registerOwner = () => {
-        register(name, email, password, chatroomName);
-        history.push('/login')
+        register(name, email, password, chatroomName, history);
     }
 
     return (

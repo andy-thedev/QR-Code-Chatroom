@@ -19,7 +19,8 @@ router.post('/register', async (req, res) => {
     const roomExists = await Owner.findOne({
         room,
     })
-    if (roomExists || ownerExists) throw "Chatroom name already exists.";
+    if (roomExists) throw "Chatroom name already exists.";
+    if (ownerExists) throw "Email already exists";
 
     //If all given information is valid, save information to database
     const owner = new Owner({
@@ -36,7 +37,7 @@ router.post('/register', async (req, res) => {
     });
 });
 
-router.post('login', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const owner = await Owner.findOne({
