@@ -9,7 +9,7 @@ const register = (name, email, password, room, history) => {
     })
     .then((res) => {
         console.log(res.data.message);
-        history.push('/login')
+        history.push('/login');
     })
     .catch((err) => {
         if (err && err.res && err.res.message) {
@@ -25,6 +25,7 @@ const login = (email, password, history) => {
     })
     .then((res) => {
         console.log(res.data.message);
+        localStorage.setItem("User_Token", res.data.token);
         history.push('/');
     })
     .catch((err) => {

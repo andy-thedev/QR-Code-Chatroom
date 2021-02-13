@@ -24,9 +24,6 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB Connected!");
 })
 
-const Owner = mongoose.model("Owner");
-const Chatroom = mongoose.model("Chatroom");
-
 //Server Setup
 const app = express();
 app.use(cors());
@@ -44,6 +41,7 @@ const io = socketio(server, {
 })
 
 io.on('connection', (socket) => {
+
   socket.on('join', () => {
     // socket.join(user.room);
   });

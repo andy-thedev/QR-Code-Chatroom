@@ -4,6 +4,8 @@ const Owner = mongoose.model("Owner");
 const express = require("express");
 const router = express.Router();
 
+const { getToken } = require("../util");
+
 router.post('/register', async (req, res) => {
     const {name, email, password, room} = req.body;
 
@@ -13,12 +15,8 @@ router.post('/register', async (req, res) => {
     if (password.length < 4) throw "Password must be at least 4 characters long.";
 
     //Check if given email/chatroom already exists in the database
-    const ownerExists = await Owner.findOne({
-        email,
-    });
-    const roomExists = await Owner.findOne({
-        room,
-    })
+    const ownerExists = await Owner.findOne({ email });
+    const roomExists = await Owner.findOne({ room });
     if (roomExists) throw "Chatroom name already exists.";
     if (ownerExists) throw "Email already exists";
 
@@ -49,7 +47,8 @@ router.post('/login', async (req, res) => {
 
     res.json({
         message: `${owner.name} has logged in successfully!`,
-    })
+        token: getToken(owner),
+    });
 });
 
 module.exports = router;
