@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const chatRoomSchema = new mongoose.Schema({
-  name: {
+  room: {
     type: String,
-    required: "Name is required!",
+    required: "Room name is required!",
   },
   owner: {
       type: String,
-      required: "Owner is required!",
+      required: "Owner name is required!",
   }
 });
 

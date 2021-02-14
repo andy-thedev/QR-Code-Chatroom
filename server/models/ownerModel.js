@@ -16,7 +16,6 @@ const ownerSchema = new mongoose.Schema(
     },
     room: {
       type: String,
-      required: "Room is required!",
     }
   },
   {

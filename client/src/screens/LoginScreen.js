@@ -11,8 +11,7 @@ function Login(props) {
   const history = useHistory();
 
   const loginOwner = () => {
-    login(email, password);
-    history.push('/');
+    login(email, password, history, props);
   }
 
   return (
