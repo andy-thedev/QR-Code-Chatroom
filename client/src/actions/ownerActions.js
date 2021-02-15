@@ -9,7 +9,8 @@ const register = (name, email, password, history) => {
     .then((res) => {
         console.log(res.data.message);
         localStorage.setItem("User_Token", res.data.token);
-        history.push('/login');
+        localStorage.setItem("UserInfo", JSON.stringify(res.data.userInfo));
+        history.push('/registerroom');
     })
     .catch((err) => {
         if (err && err.res && err.res.message) {
@@ -26,6 +27,7 @@ const login = (email, password, history, props) => {
     .then((res) => {
         console.log(res.data.message);
         localStorage.setItem("User_Token", res.data.token);
+        localStorage.setItem("UserInfo", JSON.stringify(res.data.userInfo));
         props.setupSocket();
         history.push('/');
     })

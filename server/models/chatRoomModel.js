@@ -5,9 +5,9 @@ const chatRoomSchema = new mongoose.Schema({
     type: String,
     required: "Room name is required!",
   },
-  owner: {
+  ownerEmail: {
       type: String,
-      required: "Owner name is required!",
+      required: "Owner email is required!",
   }
 });
 

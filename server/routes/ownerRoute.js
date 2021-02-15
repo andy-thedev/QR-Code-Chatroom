@@ -33,6 +33,10 @@ router.post('/register', async (req, res) => {
         return res.json({
             message: `${name} has registered successfully!`,
             token: getToken(owner),
+            userInfo: { 
+                name: name,
+                email: email,
+            },
         });
     }
     // If the new owner could not be saved, send error message
@@ -59,6 +63,10 @@ router.post('/login', async (req, res) => {
     res.json({
         message: `${owner.name} has logged in successfully!`,
         token: getToken(owner),
+        userInfo: { 
+            name: owner.name,
+            email: email,
+        },
     });
 });
 

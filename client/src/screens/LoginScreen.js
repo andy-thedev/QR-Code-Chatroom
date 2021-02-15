@@ -5,9 +5,10 @@ import './screen.css';
 
 import { login } from '../actions/ownerActions'
 
-function Login(props) {
+function LoginScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const history = useHistory();
 
   const loginOwner = () => {
@@ -30,4 +31,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default LoginScreen;

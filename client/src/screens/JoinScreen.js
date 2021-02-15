@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import './screen.css';
 
-export default function SignIn() {
+function JoinScreen() {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
 
@@ -24,3 +24,5 @@ export default function SignIn() {
     </div>
   );
 }
+
+export default JoinScreen;

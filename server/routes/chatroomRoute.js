@@ -30,11 +30,12 @@ router.post("/", isAuth, async(req, res) => {
         res.json({
             message: `${room} has been created successfully!`,
         });
+    } else {
+        // If the new room could not be saved, send error message
+        return res.json({
+            message: `${room} was not accepted to the database.`,
+        });
     }
-    // If the new room could not be saved, send error message
-    return res.json({
-        message: `${room} was not accepted to the database.`,
-    });
 });
 
 module.exports = router;

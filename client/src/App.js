@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 
 import JoinScreen from './screens/JoinScreen';
-import RegisterScreen from './screens/RegisterScreen';
+import RegisterOwnerScreen from './screens/RegisterOwnerScreen';
+import RegisterChatRoomScreen from './screens/RegisterChatRoomScreen';
 import LoginScreen from './screens/LoginScreen';
 import ChatScreen from './screens/ChatScreen';
 import OwnerChatScreen from './screens/OwnerChatScreen';
@@ -47,7 +48,8 @@ const App = () => {
   return (
     <Router>
       <Route path="/" exact component={JoinScreen} />
-      <Route path="/register" component={RegisterScreen}/>
+      <Route path="/register" component={RegisterOwnerScreen}/>
+      <Route path="/registerroom" component={RegisterChatRoomScreen}/>
       <Route path="/login" component={LoginScreen} setupSocket={setupSocket}/>
       <Route path="/chat" component={ChatScreen} />
       <Route path="/ownerchat" component={OwnerChatScreen} socket={socket}/>

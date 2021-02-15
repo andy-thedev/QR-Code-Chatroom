@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const createRoom = (room, ownerEmail) => {
+const register = (room, ownerEmail, history) => {
     axios.post("http://localhost:8000/chatroom/", { room, ownerEmail }, {
         headers: {
             Authorization: "Bearer " + localStorage.getItem("User_Token"),
@@ -15,4 +15,4 @@ const createRoom = (room, ownerEmail) => {
     });
 }
 
-export {createRoom};
+export {register};
