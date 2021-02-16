@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 import './screen.css';
-
-import { login } from '../actions/ownerActions'
 
 function LoginScreen(props) {
   const [email, setEmail] = useState('');
@@ -12,7 +11,22 @@ function LoginScreen(props) {
   const history = useHistory();
 
   const loginOwner = () => {
-    login(email, password, history, props);
+    axios.post("http://localhost:8000/owner/login", {
+      email,
+      password
+    })
+    .then((res) => {
+        console.log(res.data.message);
+        localStorage.setItem("User_Token", res.data.token);
+        localStorage.setItem("UserInfo", JSON.stringify(res.data.userInfo));
+        props.setupSocket();
+        history.push('/');
+    })
+    .catch((err) => {
+        if (err && err.res && err.res.message) {
+            console.log(err.message);
+        }
+    });
   }
 
   return (

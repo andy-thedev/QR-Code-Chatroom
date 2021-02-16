@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useHistory} from "react-router-dom";
-import { register } from '../actions/chatroomActions';
+import axios from "axios";
 
 import './screen.css';
 
@@ -12,7 +12,19 @@ function RegisterChatRoomScreen(props) {
 
   const registerRoom = () => {
     if (userInfo) {
-      register(room, userInfo.email, history);
+      const ownerEmail = userInfo.email
+      axios.post("http://localhost:8000/chatroom/", { room, ownerEmail }, {
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("User_Token"),
+        },
+      }).then((res) => {
+          console.log(res.data.message);
+          history.push('/');
+      }).catch((err) => {
+          if (err && err.res && err.res.message) {
+              console.log(err.message);
+          }
+      });
     }
     else {
       console.log("Please register or log-in.")
