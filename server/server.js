@@ -58,7 +58,7 @@ io.use(async (socket, next) => {
 io.on('connection', (socket) => {
   console.log("Socket Connected");
 
-  socket.on('join', () => {
+  socket.on('joinRoom', ({chatroomId}) => {
     // socket.join(user.room);
   });
 
