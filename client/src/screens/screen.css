@@ -69,6 +69,25 @@ button:focus {
   }
 }
 
+/* Dashboard Screen */
+.columnContainer {
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-evenly; 
+  width: 100%; 
+  height: 100%;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.roomContainer {
+  color: #fff;
+}
+
 /* Chat Screen */
 .outerContainer {
   display: flex;
@@ -104,4 +123,3 @@ button:focus {
     width: 60%;
   }
 }
-  

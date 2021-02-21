@@ -6,6 +6,7 @@ import JoinScreen from './screens/JoinScreen';
 import RegisterOwnerScreen from './screens/RegisterOwnerScreen';
 import RegisterChatRoomScreen from './screens/RegisterChatRoomScreen';
 import LoginScreen from './screens/LoginScreen';
+import DashboardScreen from './screens/DashboardScreen';
 import ChatScreen from './screens/ChatScreen';
 import OwnerChatScreen from './screens/OwnerChatScreen';
 
@@ -57,6 +58,7 @@ const App = () => {
         path="/login" 
         render = {() => <LoginScreen setupSocket={setupSocket}/>}
       />
+      <Route path="/dashboard" component={DashboardScreen}/>
       <Route path="/chat" component={ChatScreen} />
       <Route path="/ownerchat" component={OwnerChatScreen} socket={socket}/>
     </BrowserRouter>

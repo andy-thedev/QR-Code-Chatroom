@@ -59,8 +59,14 @@ io.on('connection', (socket) => {
   console.log("Socket Connected");
 
   socket.on('joinRoom', ({chatroomId}) => {
-    // socket.join(user.room);
+    socket.join(chatroomId);
+    console.log("A user joined the chatroom: " + chatroomId);
   });
+
+  socket.on("leaveRoom", ({chatroomId}) => {
+    socket.leave(chatroomId);
+    console.log("A user left the chatroom: " + chatroomId);
+  })
 
   socket.on('sendMessage', () => {
     // io.to(user.room).emit('message', { user: user.name, text: message });
