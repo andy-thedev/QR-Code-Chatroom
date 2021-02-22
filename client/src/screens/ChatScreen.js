@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import {useLocation} from 'react-router-dom';
 import queryString from 'query-string';
 
 import TextContainer from '../components/TextContainer';
@@ -9,35 +9,37 @@ import Input from '../components/Input';
 
 import './screen.css';
 
-const ENDPOINT = 'localhost:8000';
+const ChatScreen = ({ socket }) => {
+  const location = useLocation();
+  const socketJoinId = location.search;
 
-let socket;
-
-const ChatScreen = ({ location }) => {
   const [room, setRoom] = useState('');
   const [roomId, setRoomId] = useState('');
-
-  const [name, setName] = useState('');
-  const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const { room, id } = queryString.parse(location.search);
+    // Fetch room query from url
+    const { room, id } = queryString.parse(socketJoinId);
     setRoom(room);
     setRoomId(id);
-  }, []);
+
+    if (socket) {
+      socket.emit("joinRoom", {
+        chatroomId: socketJoinId,
+      });
+    }
+  }, [socket]);
 
   return (
     <div className="outerContainer">
       <div className="container">
-        <div style={{color: "black"}}>room: {room}</div>
-        <div style={{color: "black"}}>id: {roomId}</div>
+        <div style={{color: "black"}}>room id</div>
           {/* <InfoBar room={room} />
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} /> */}
       </div>
-      <TextContainer users={users}/>
+      {/* <TextContainer users={users}/> */}
     </div>
   );
 }

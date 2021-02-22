@@ -59,7 +59,10 @@ const App = () => {
         render = {() => <LoginScreen setupSocket={setupSocket}/>}
       />
       <Route path="/dashboard" component={DashboardScreen}/>
-      <Route path="/chat" component={ChatScreen} />
+      <Route 
+        path="/chat" 
+        render={() => <ChatScreen socket={socket}/>}
+      />
       <Route path="/ownerchat" component={OwnerChatScreen} socket={socket}/>
     </BrowserRouter>
   );
