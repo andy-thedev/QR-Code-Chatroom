@@ -34,7 +34,7 @@ Contains commonly used variables in the backend parts of the web application (ie
 **util.js:**  
 Contains utility functions, such as middlewares, and tokenization functions
 
-## Features:
+## Features
 **Feature 1:**  
 Admin login controlled by JWT authentication.  
 User information is tokenized and verified with the database to safely record, and match login information.  
