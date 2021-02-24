@@ -8,7 +8,7 @@ Back-end: NodeJS, ExpressJS, Socket.IO
 Database: MongoDB  
 Version Control: Git Bash
 
-## client/src
+## /client/src
 **/screens:**  
 The visual implementations of pages, such as the login screen, and dashboard screen
 
@@ -18,7 +18,7 @@ Potentially reuseable visual parts of a screen, such as a message, and info bar
 **App.js:**  
 The main container component for all other components, such as screens
 
-## server
+## /server
 **/models:**  
 The data model describing the shape and structure of saving documents, such as chatroom/admin information
 
