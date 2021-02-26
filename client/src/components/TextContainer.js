@@ -4,16 +4,23 @@ import onlineIcon from '../icons/onlineIcon.png';
 
 import './component.css';
 
-const TextContainer = ({ users }) => (
+const TextContainer = ({ room, roomReference }) => (
   <div className="textContainer">
     <div>
-      {users[0] && <h1>Welcome to {users[0].room}</h1>}
-      <p>This service is offered by FAVOURANT, </p>
-      <p>
-        Toronto's first QR-code, real-time communication app
-      </p>
+      {<h1>Welcome to {room} {roomReference}</h1>}
+      <div style={{marginTop: "5rem"}}>
+        <h2>
+          The owner is currently
+        </h2>
+      </div>
+      <div style={{marginTop: "10rem"}}>
+        <p>This service is offered by FAVOURANT, </p>
+        <p>
+          Toronto's first QR-code, real-time communication app
+        </p>
+      </div>
     </div>
-    {
+    {/* {
       users
         ? (
           <div>
@@ -31,7 +38,7 @@ const TextContainer = ({ users }) => (
           </div>
         )
         : null
-    }
+    } */}
   </div>
 );
 

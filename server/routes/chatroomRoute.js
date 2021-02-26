@@ -10,8 +10,8 @@ router.post("/", isAuth, async(req, res) => {
     const { room, ownerEmail, numRooms } = req.body;
 
     // Check if chatroom name only contains alphabets and whitespaces
-    const nameRegex = /^[A-Za-z\s]+$/;
-    if (!nameRegex.test(room)) throw "Chatroom name can only contain spaces and alphabets.";
+    const nameRegex = /^[A-Za-z\s\d]+$/;
+    if (!nameRegex.test(room)) throw "Chatroom name can only contain spaces, digits, and alphabets.";
 
     // Check if the chatroom name already exists
     const chatroomExists = await Chatroom.findOne({ room });
@@ -20,17 +20,17 @@ router.post("/", isAuth, async(req, res) => {
     // Check if number of rooms is a valid, whole number
     if ((numRooms % 1 !== 0) || (numRooms <= 0)) throw "Number of rooms must be a whole number greater than 0"
 
-    let ids = Array.from({length: numRooms}, (v, k) => k+1);
-    ids.map(async (id) => {
+    let references = Array.from({length: numRooms}, (v, k) => k+1);
+    references.map(async (reference) => {
         const chatroom = new Chatroom({
             room,
-            roomId: id,
+            roomReference: reference,
             ownerEmail,
         });
         const createdChatroom = await chatroom.save();
         if (!createdChatroom) {
             return res.json({
-                message: `${room} with id ${id} was not accepted to the database.`,
+                message: `${room} with id ${reference} was not accepted to the database.`,
             })
         }
     });

@@ -14,25 +14,18 @@ const App = () => {
   const [socket, setSocket] = useState(null);
 
   const setupSocket = () => {
-    const token = localStorage.getItem("User_Token");
-    if (token && !socket) {
-      // If user has logged in, create a socket after token verification
+    if (!socket) {
       const newSocket = io("http://localhost:8000", {
         transports:['websocket'],
-        // Sends token to back-end (server.js) to be verified
-        query: {
-          token: localStorage.getItem("User_Token"),
-        },
       });
-
       // If socket disconnects, raise error message
       newSocket.on("disconnect", () => {
         setSocket(null);
-        console.log("Error, Socket Disconnected!")
+        console.log("Error, Socket Disconnected!");
       });
 
       // If socket cunnects successfully, raise successs message
-      newSocket.on("connection", () => {
+      newSocket.on("connect", () => {
         console.log("Success, Socket Connected!");
       });
 
@@ -41,23 +34,16 @@ const App = () => {
     }
   }
 
-  // On render, attempt to set-up a socket
   useEffect(() => {
     setupSocket();
-  }, []);
+  }, [])
 
   return (
     <BrowserRouter>
       <Route path="/" exact component={JoinScreen} />
-      <Route 
-        path="/register"
-        render = {() => <RegisterOwnerScreen setupSocket={setupSocket}/>}
-        exact/>
+      <Route path="/register" component = {RegisterOwnerScreen} exact/>
       <Route path="/register/room" component={RegisterChatRoomScreen} exact/>
-      <Route 
-        path="/login" 
-        render = {() => <LoginScreen setupSocket={setupSocket}/>}
-      />
+      <Route path="/login" component={LoginScreen}/>
       <Route path="/dashboard" component={DashboardScreen}/>
       <Route 
         path="/chat" 

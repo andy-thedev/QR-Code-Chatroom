@@ -5,9 +5,9 @@ const chatRoomSchema = new mongoose.Schema({
     type: String,
     required: "Room name is required!",
   },
-  roomId: {
+  roomReference: {
     type: String,
-    required: "Please provide the room number/id"
+    required: "Please provide the room reference"
   },
   ownerEmail: {
       type: String,

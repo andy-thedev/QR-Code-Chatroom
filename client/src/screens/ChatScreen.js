@@ -14,32 +14,46 @@ const ChatScreen = ({ socket }) => {
   const socketJoinId = location.search;
 
   const [room, setRoom] = useState('');
-  const [roomId, setRoomId] = useState('');
+  const [roomReference, setRoomReference] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    if (message) {
+      console.log(message);
+      socket.emit('sendMessage', 
+        {chatroomId: socketJoinId}, 
+        room, 
+        roomReference, 
+        message, 
+      );
+      setMessage('');
+    }
+  }
+
   useEffect(() => {
     // Fetch room query from url
-    const { room, id } = queryString.parse(socketJoinId);
+    const { room, reference } = queryString.parse(socketJoinId);
     setRoom(room);
-    setRoomId(id);
-
+    setRoomReference(reference);
+    console.log(socket);
     if (socket) {
       socket.emit("joinRoom", {
         chatroomId: socketJoinId,
       });
     }
-  }, [socket]);
+  }, []);
 
   return (
     <div className="outerContainer">
       <div className="container">
-        <div style={{color: "black"}}>room id</div>
-          {/* <InfoBar room={room} />
-          <Messages messages={messages} name={name} />
-          <Input message={message} setMessage={setMessage} sendMessage={sendMessage} /> */}
+        <InfoBar room={room} roomReference={roomReference}/>
+        <Messages messages={messages} name={''} />
+        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      {/* <TextContainer users={users}/> */}
+      <TextContainer room={room} roomReference={roomReference}/>
     </div>
   );
 }

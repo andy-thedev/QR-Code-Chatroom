@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 // Models
 require("./models/ownerModel");
 require("./models/chatRoomModel");
+require("./models/messageModel");
+const Message = mongoose.model("Message");
 
 // Server Imports
 const express = require('express');
@@ -47,14 +49,6 @@ const io = socketio(server, {
   cors: true,
 })
 
-io.use(async (socket, next) => {
-  try {
-    const token = socket.handshake.query.token;
-    const payload = await jwt.verify(token, config.JWT_SECRET);
-    next();
-  } catch (err) {}
-});
-
 io.on('connection', (socket) => {
   console.log("Socket Connected");
 
@@ -68,7 +62,20 @@ io.on('connection', (socket) => {
     console.log("A user left the chatroom: " + chatroomId);
   })
 
-  socket.on('sendMessage', () => {
+  socket.on('sendMessage', async (chatroomId, room, roomReference, message) => {
+    if (message.trim().length > 0) {
+      const newMessage = new Message({
+        room: room,
+        roomReference: roomReference,
+        message,
+        socketId: socket.id,
+      });
+      io.to(chatroomId).emit("newMessage", {
+        message,
+      })
+      await newMessage.save();
+      console.log("Message has been saved: " + message);
+    }
     // io.to(user.room).emit('message', { user: user.name, text: message });
   });
 
