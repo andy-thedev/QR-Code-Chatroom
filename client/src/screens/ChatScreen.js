@@ -19,30 +19,38 @@ const ChatScreen = ({ socket }) => {
   const [messages, setMessages] = useState([]);
 
   const sendMessage = (e) => {
+    // Prevent submit interaction from reloading the page
     e.preventDefault();
 
     if (message) {
-      console.log(message);
-      socket.emit('sendMessage', 
-        {chatroomId: socketJoinId}, 
+      socket.emit('sendMessage', {
+        chatroomId: socketJoinId, 
         room, 
         roomReference, 
         message, 
-      );
+      });
       setMessage('');
     }
   }
 
+  // On page load/reload, join room in socket following query provided in url
   useEffect(() => {
     // Fetch room query from url
     const { room, reference } = queryString.parse(socketJoinId);
     setRoom(room);
     setRoomReference(reference);
-    console.log(socket);
+    
     if (socket) {
-      socket.emit("joinRoom", {
+      // Join room on connection
+      socket.emit('joinRoom', {
         chatroomId: socketJoinId,
       });
+      
+      // Begin Listening for a new message, and add the new message 
+      // to the list of messages on client-side for rendering
+      socket.on('newMessage', (message) => {
+        setMessages(messages => [...messages, message]);
+      })
     }
   }, []);
 
@@ -50,7 +58,7 @@ const ChatScreen = ({ socket }) => {
     <div className="outerContainer">
       <div className="container">
         <InfoBar room={room} roomReference={roomReference}/>
-        <Messages messages={messages} name={''} />
+        <Messages messages={messages} currentUser={socket ? socket.id : ''} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
       <TextContainer room={room} roomReference={roomReference}/>

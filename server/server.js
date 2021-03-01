@@ -52,7 +52,7 @@ const io = socketio(server, {
 io.on('connection', (socket) => {
   console.log("Socket Connected");
 
-  socket.on('joinRoom', ({chatroomId}) => {
+  socket.on('joinRoom', ({chatroomId}, callback) => {
     socket.join(chatroomId);
     console.log("A user joined the chatroom: " + chatroomId);
   });
@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
     console.log("A user left the chatroom: " + chatroomId);
   })
 
-  socket.on('sendMessage', async (chatroomId, room, roomReference, message) => {
+  socket.on('sendMessage', async ({chatroomId, room, roomReference, message}) => {
     if (message.trim().length > 0) {
       const newMessage = new Message({
         room: room,
@@ -70,13 +70,13 @@ io.on('connection', (socket) => {
         message,
         socketId: socket.id,
       });
-      io.to(chatroomId).emit("newMessage", {
-        message,
-      })
+      io.in(chatroomId).emit('newMessage', {
+        text: message,
+        user: socket.id,
+      });
       await newMessage.save();
       console.log("Message has been saved: " + message);
     }
-    // io.to(user.room).emit('message', { user: user.name, text: message });
   });
 
   socket.on('disconnect', () => {

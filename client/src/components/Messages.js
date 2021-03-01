@@ -6,9 +6,9 @@ import Message from './Message';
 
 import './component.css';
 
-const Messages = ({ messages, name }) => (
+const Messages = ({ messages, currentUser }) => (
   <ScrollToBottom className="messages">
-    {messages.map((message, i) => <div key={i}><Message message={message} name={name}/></div>)}
+    {messages.map((message, i) => <div key={i}><Message message={message} currentUser={currentUser}/></div>)}
   </ScrollToBottom>
 );
 
