@@ -6,6 +6,12 @@ const router = express.Router();
 
 const { isAuth } = require('../util');
 
+router.get("/:room", isAuth, async(req, res) => {
+    const room = req.params.room;
+    const rooms = await Chatroom.find({room});
+    res.send(rooms);
+})
+
 router.post("/", isAuth, async(req, res) => {
     const { room, ownerEmail, numRooms } = req.body;
 

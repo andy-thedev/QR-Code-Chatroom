@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
 import queryString from 'query-string';
 
+import io from 'socket.io-client';
+
 import TextContainer from '../components/TextContainer';
 import Messages from '../components/Messages';
 import InfoBar from '../components/InfoBar';
@@ -9,10 +11,12 @@ import Input from '../components/Input';
 
 import './screen.css';
 
-const ChatScreen = ({ socket }) => {
+const ChatScreen = () => {
   const location = useLocation();
-  const socketJoinId = location.search;
 
+  const [socket, setSocket] = useState(null);
+
+  const [socketJoinId, setSocketJoinId] = useState('');
   const [room, setRoom] = useState('');
   const [roomReference, setRoomReference] = useState('');
   const [message, setMessage] = useState('');
@@ -24,7 +28,7 @@ const ChatScreen = ({ socket }) => {
 
     if (message) {
       socket.emit('sendMessage', {
-        chatroomId: socketJoinId, 
+        chatroomId: socketJoinId,
         room, 
         roomReference, 
         message, 
@@ -36,22 +40,30 @@ const ChatScreen = ({ socket }) => {
   // On page load/reload, join room in socket following query provided in url
   useEffect(() => {
     // Fetch room query from url
-    const { room, reference } = queryString.parse(socketJoinId);
+    const { room, reference } = queryString.parse(location.search);
+    
+    const newSocket = io("http://localhost:8000", {
+        transports:['websocket'],
+    });
+
+    // If socket disconnects, raise error message
+    setSocketJoinId(location.search);
     setRoom(room);
     setRoomReference(reference);
-    
-    if (socket) {
+
+    if (newSocket) {
       // Join room on connection
-      socket.emit('joinRoom', {
-        chatroomId: socketJoinId,
+      newSocket.emit('joinRoom', {
+        chatroomId: location.search,
       });
-      
       // Begin Listening for a new message, and add the new message 
       // to the list of messages on client-side for rendering
-      socket.on('newMessage', (message) => {
+      newSocket.on('newMessage', (message) => {
         setMessages(messages => [...messages, message]);
       })
     }
+
+    setSocket(newSocket);
   }, []);
 
   return (

@@ -50,9 +50,9 @@ const io = socketio(server, {
 })
 
 io.on('connection', (socket) => {
-  console.log("Socket Connected");
+  console.log("Socket Connected bro");
 
-  socket.on('joinRoom', ({chatroomId}, callback) => {
+  socket.on('joinRoom', ({chatroomId}) => {
     socket.join(chatroomId);
     console.log("A user joined the chatroom: " + chatroomId);
   });

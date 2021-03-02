@@ -19,8 +19,7 @@ function LoginScreen(props) {
         console.log(res.data.message);
         localStorage.setItem("User_Token", res.data.token);
         localStorage.setItem("UserInfo", JSON.stringify(res.data.userInfo));
-        props.setupSocket();
-        history.push('/');
+        history.push('/dashboard');
     })
     .catch((err) => {
         if (err && err.res && err.res.message) {
