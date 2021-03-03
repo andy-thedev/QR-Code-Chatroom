@@ -13,6 +13,10 @@ html, body {
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 .joinOuterContainer {
   display: flex;
   justify-content: center;
@@ -86,6 +90,12 @@ button:focus {
 
 .roomContainer {
   color: #fff;
+}
+
+.title {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 0;
 }
 
 /* Chat Screen */

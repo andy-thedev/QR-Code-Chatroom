@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
-
-import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
 function DashboardScreen(props) {
+    const [roomName, setRoomName] = useState('');
     const [rooms, setRooms] = useState([]);
 
     const getAllRooms = async (room) => {
@@ -17,56 +17,41 @@ function DashboardScreen(props) {
                 console.log(err.message);
             }
         });
-        console.log("haha:", rooms.data);
-        setRooms(rooms.data);
+        setRoomName(rooms.data[0].room);
+        convertRoomsTriple(rooms.data);
+    }
+
+    const convertRoomsTriple = (rooms) => {
+        rooms.sort((a,b) => a.roomReference - b.roomReference);
+        const groupedRooms = [];
+        while (rooms.length) {
+            groupedRooms.push(rooms.splice(0,3));
+        }
+        setRooms(groupedRooms);
     }
 
     useEffect(() => {
-        const {room} = queryString.parse(`?room=testroom&reference=1`);
-        getAllRooms(room);
+        const owner = JSON.parse(localStorage.getItem("UserInfo"));
+        getAllRooms(owner.email);
     }, []);
 
     return(
         <div className="outerContainer">
             <div className="columnContainer">
-                <div className="rowContainer">
-                    <div className="roomContainer">
-                        Can I get a spoon?
-                    </div>
-                    <div className="roomContainer">
-                        {rooms.map(room => 
-                            <div key={room._id}>
-                                <div>{room.room}</div>
-                                <div>{room.roomReference}</div>
-                            </div>)
-                        }
-                    </div>
-                    <div className="roomContainer">
-                        I would like to order
-                    </div>
-                </div>
-                <div className="rowContainer">
-                    <div className="roomContainer">
-                        Can I get a spoon?
-                    </div>
-                    <div className="roomContainer">
-                        It's a little cold here
-                    </div>
-                    <div className="roomContainer">
-                        I would like to order
-                    </div>
-                </div>
-                <div className="rowContainer">
-                    <div className="roomContainer">
-                        Can I get a spoon?
-                    </div>
-                    <div className="roomContainer">
-                        It's a little cold here
-                    </div>
-                    <div className="roomContainer">
-                        I would like to order
-                    </div>
-                </div>
+                <h1 className="title">{roomName}</h1>
+                {
+                    rooms.map((triple, i) => (
+                        <div className="rowContainer" key={i}>
+                            {triple.map((room) => (
+                                <Link key={room._id} to={`/chat?room=${room.room}&reference=${room.roomReference}`}>
+                                    <div className="roomContainer">
+                                        <h1>{room.roomReference}</h1>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    ))
+                }
             </div>
         </div>
     )
