@@ -16,6 +16,7 @@ const cors = require('cors');
 // Routes
 const ownerRoute = require('./routes/ownerRoute');
 const chatroomRoute = require('./routes/chatroomRoute');
+const messageRoute = require('./routes/messageRoute');
 
 // Websocket Imports
 const socketio = require('socket.io');
@@ -38,6 +39,7 @@ app.use(express.json()); //For body parsing
 // Connect Routes to api's
 app.use('/owner', ownerRoute);
 app.use('/chatroom', chatroomRoute);
+app.use('/messages', messageRoute);
 
 const server = app.listen(config.PORT, () => {
   console.log(`Server listening on port ${config.PORT}`);

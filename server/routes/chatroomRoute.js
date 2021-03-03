@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const Chatroom = mongoose.model("Chatroom");
 
 const express = require("express");
-const router = express.Router();
 
 const { isAuth } = require('../util');
+
+const router = express.Router();
 
 router.get("/:owner", isAuth, async(req, res) => {
     const ownerEmail = req.params.owner;

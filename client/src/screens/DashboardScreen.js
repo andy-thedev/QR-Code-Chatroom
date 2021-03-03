@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
+import DashboardUnit from '../components/DashboardUnit';
 
 function DashboardScreen(props) {
     const [roomName, setRoomName] = useState('');
     const [rooms, setRooms] = useState([]);
+    const [messages, setMessages] = useState([]);
 
     const getAllRooms = async (room) => {
         const rooms = await axios.get("http://localhost:8000/chatroom/" + room, {
@@ -18,6 +21,7 @@ function DashboardScreen(props) {
             }
         });
         setRoomName(rooms.data[0].room);
+        // getAllRecentMessages(rooms.data);
         convertRoomsTriple(rooms.data);
     }
 
@@ -39,14 +43,11 @@ function DashboardScreen(props) {
         <div className="outerContainer">
             <div className="columnContainer">
                 <h1 className="title">{roomName}</h1>
-                {
-                    rooms.map((triple, i) => (
+                    {rooms.map((triple, i) => (
                         <div className="rowContainer" key={i}>
                             {triple.map((room) => (
                                 <Link key={room._id} to={`/chat?room=${room.room}&reference=${room.roomReference}`}>
-                                    <div className="roomContainer">
-                                        <h1>{room.roomReference}</h1>
-                                    </div>
+                                    <DashboardUnit room={room.room} roomReference={room.roomReference}/>
                                 </Link>
                             ))}
                         </div>
