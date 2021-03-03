@@ -46,7 +46,6 @@ const ChatScreen = () => {
         transports:['websocket'],
     });
 
-    // If socket disconnects, raise error message
     setSocketJoinId(location.search);
     setRoom(room);
     setRoomReference(reference);

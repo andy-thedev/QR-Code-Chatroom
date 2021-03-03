@@ -72,9 +72,10 @@ io.on('connection', (socket) => {
         message,
         socketId: socket.id,
       });
-      io.in(chatroomId).emit('newMessage', {
+      io.to(chatroomId).emit('newMessage', {
         text: message,
         user: socket.id,
+        roomReference: roomReference,
       });
       await newMessage.save();
       console.log("Message has been saved: " + message);

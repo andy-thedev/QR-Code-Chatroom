@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import './component.css';
 
-function DashboardUnit({ room, roomReference }) {
+function DashboardUnit({ room, roomReference, socket }) {
   const [recentMessage, setRecentMessage] = useState('');
 
   const getRecentMessage = async() => {
@@ -22,7 +22,23 @@ function DashboardUnit({ room, roomReference }) {
   }
 
   useEffect(() => {
-    getRecentMessage()
+    
+    // On render, get most recent message from database
+    getRecentMessage();
+
+    // Join room, and if a new message has been emitted from the room,
+    // update recent message display with the emitted message
+    if (socket) {
+      socket.emit('joinRoom', {
+        chatroomId: `?room=${room}&reference=${roomReference}`
+      });
+
+      socket.on('newMessage', (message) => {
+        if (message.roomReference == roomReference) {
+          setRecentMessage(message.text);
+        }
+      })
+    }
   }, []);
 
   return(

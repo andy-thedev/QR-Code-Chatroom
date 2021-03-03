@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
+import io from 'socket.io-client';
+
 import DashboardUnit from '../components/DashboardUnit';
 
 function DashboardScreen(props) {
     const [roomName, setRoomName] = useState('');
     const [rooms, setRooms] = useState([]);
-    const [messages, setMessages] = useState([]);
+    const [socket, setSocket] = useState([]);
 
     const getAllRooms = async (room) => {
         const rooms = await axios.get("http://localhost:8000/chatroom/" + room, {
@@ -36,6 +38,14 @@ function DashboardScreen(props) {
 
     useEffect(() => {
         const owner = JSON.parse(localStorage.getItem("UserInfo"));
+
+        const newSocket = io("http://localhost:8000", {
+            transports: ['websocket'],
+        });
+
+        if (newSocket) {
+            setSocket(newSocket);
+        }
         getAllRooms(owner.email);
     }, []);
 
@@ -47,7 +57,7 @@ function DashboardScreen(props) {
                         <div className="rowContainer" key={i}>
                             {triple.map((room) => (
                                 <Link key={room._id} to={`/chat?room=${room.room}&reference=${room.roomReference}`}>
-                                    <DashboardUnit room={room.room} roomReference={room.roomReference}/>
+                                    <DashboardUnit room={room.room} roomReference={room.roomReference} socket={socket}/>
                                 </Link>
                             ))}
                         </div>
