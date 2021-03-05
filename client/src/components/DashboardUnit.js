@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
+import InfoBar from './InfoBar';
+
 import './component.css';
 
 function DashboardUnit({ room, roomReference, socket }) {
@@ -43,8 +45,9 @@ function DashboardUnit({ room, roomReference, socket }) {
 
   return(
     <div className="roomContainer">
-      <h1>{roomReference}</h1>
-      <h3>{recentMessage}</h3>
+      {/* <h1>{roomReference}</h1> */}
+      <InfoBar room={""} roomReference={roomReference}/>
+        <p className="recentMessage">{recentMessage ? recentMessage : "None"}</p>
     </div>
   )
 }

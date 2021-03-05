@@ -18,10 +18,6 @@ const App = () => {
       <Route path="/register/room" component={RegisterChatRoomScreen} exact/>
       <Route path="/login" component={LoginScreen}/>
       <Route path="/dashboard" component={DashboardScreen}/>
-      {/* <Route 
-        path="/chat" 
-        render={() => <ChatScreen socket={socket}/>}
-      /> */}
       <Route path="/chat" component = {ChatScreen}/>
       <Route path="/ownerchat" component={OwnerChatScreen}/>
     </BrowserRouter>

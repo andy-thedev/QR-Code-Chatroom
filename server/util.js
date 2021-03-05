@@ -18,12 +18,13 @@ const isAuth = (req, res, next) => {
         const onlyToken = token.slice(7, token.length);
         jwt.verify(onlyToken, config.JWT_SECRET, (err, decode) => {
             if (err) {
-                return res.status(401).json({ message: 'Invalid Token' });
+                return res.status(401).send({ message: 'Could not verify token' });
             }
             req.user = decode;
             next();
         });
     } catch(err) {
+        console.log("err 2");
         res.status(401).json({
             message: "Invalid Token."
         });

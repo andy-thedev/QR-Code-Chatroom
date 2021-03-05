@@ -12,19 +12,24 @@ function DashboardScreen(props) {
     const [rooms, setRooms] = useState([]);
     const [socket, setSocket] = useState([]);
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const getAllRooms = async (room) => {
         const rooms = await axios.get("http://localhost:8000/chatroom/" + room, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("User_Token"),
             },
         }).catch((err) => {
-            if (err && err.res && err.res.message) {
-                console.log(err.message);
+            if (err) {
+                console.log(err.message + ": " + err.response.data.message);
             }
         });
-        setRoomName(rooms.data[0].room);
-        // getAllRecentMessages(rooms.data);
-        convertRoomsTriple(rooms.data);
+
+        if (rooms) {
+            setRoomName(rooms.data[0].room);
+            convertRoomsTriple(rooms.data);
+            setIsLoggedIn(true);
+        }
     }
 
     const convertRoomsTriple = (rooms) => {
@@ -51,8 +56,13 @@ function DashboardScreen(props) {
 
     return(
         <div className="outerContainer">
-            <div className="columnContainer">
-                <h1 className="title">{roomName}</h1>
+            {!isLoggedIn ?
+                <h1 className="error_message">
+                    <Link to={"/login"}>Click Here to Login</Link>
+                </h1> 
+                :
+                <div className="columnContainer">
+                    <h1 className="title">{roomName}</h1>
                     {rooms.map((triple, i) => (
                         <div className="rowContainer" key={i}>
                             {triple.map((room) => (
@@ -61,9 +71,9 @@ function DashboardScreen(props) {
                                 </Link>
                             ))}
                         </div>
-                    ))
-                }
-            </div>
+                    ))}
+                </div>   
+            }
         </div>
     )
 }
