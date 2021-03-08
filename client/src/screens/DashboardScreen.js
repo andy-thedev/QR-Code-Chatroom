@@ -61,18 +61,18 @@ function DashboardScreen(props) {
                     <Link to={"/login"}>Click Here to Login</Link>
                 </h1> 
                 :
-                <div className="columnContainer">
+                <div className="content">
                     <h1 className="title">{roomName}</h1>
-                    {rooms.map((triple, i) => (
-                        <div className="rowContainer" key={i}>
-                            {triple.map((room) => (
-                                <Link key={room._id} to={`/chat?room=${room.room}&reference=${room.roomReference}`}>
-                                    <DashboardUnit room={room.room} roomReference={room.roomReference} socket={socket}/>
-                                </Link>
-                            ))}
-                        </div>
-                    ))}
-                </div>   
+                    <div className="columnContainer">
+                        {rooms.map((triple, i) => (
+                            <div className="rowContainer" key={i}>
+                                {triple.map((room) => (
+                                    <DashboardUnit key={room._id} room={room.room} roomReference={room.roomReference} socket={socket}/>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             }
         </div>
     )

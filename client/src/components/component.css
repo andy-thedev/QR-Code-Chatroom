@@ -1,11 +1,84 @@
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 7%;
+
+    background-color: rgb(2 1 0 / 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    min-width: 70%;
+    margin: 0 auto 0 auto;
+}
+
+.navbar-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.navbar-brand, .navbar-brand a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 0 0.2rem 0 0.2rem;
+}
+
+.navbar-items, .navbar-items a {
+    color: #fff;
+    padding: 0 0.7rem 0 0.7rem;
+    text-decoration: none;
+}
+
+.navbar-items a:hover {
+    color: #2979FF;
+}
+
+.navbar-items-mobile {
+    color: #fff;
+    display: none;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.mobile-dropdown {
+    width: 100vw;
+    position: fixed;
+    top: 23%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 0.5rem 0 1rem 0;
+
+    background-color: #1A1A1D;
+
+}
+
+.dropdown-items, .dropdown-items a{
+    color: #fff;
+    text-decoration: none;
+    padding: 1rem;
+    text-align: center;
+}
+
 /* Dashboard Unit */
 .roomContainer {
     flex: 1;
     overflow: hidden;
     border-radius: 4px 4px 0 0;
 
-    width: 28vw;
-    height: 20vh;
+    height: 25vh;
+
+    border: 1px solid #000;
 
     background-color: #fff;
     color: #000;
@@ -13,13 +86,18 @@
     text-align: center;
 }
 
+.roomContainer a{
+    color: #000;
+}
+
 .recentMessage {
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
-    margin-top: 1rem;
     padding: 0 2rem 0 2rem;
+    margin-top: 1rem;
 }
 
 /* InfoBar */
@@ -186,13 +264,44 @@ input:focus, textarea:focus, select:focus{
     margin-bottom: 0px;
 }
 
-@media (min-width: 320px) and (max-width: 1200px) {
+@media (max-width: 1200px) {
+    .navbar-container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+
     .textContainer {
         display: none;
     }
 
+    .recentMessage {
+        font-size: 1rem;
+    }
+
     .roomContainer {
-        display: block;
         width: 100%;
     }
 }
+
+@media (max-width: 480px) {
+
+    .navbar {
+        height: 9%;
+    }
+
+    .navbar-items-mobile {
+        display: flex;
+    }
+    
+    .navbar-items {
+        display: none;
+    }
+
+    .navbar-brand, .navbar-brand a{
+        font-size: 1.5rem;
+    }
+
+  }
+  

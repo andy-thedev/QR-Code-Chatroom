@@ -5,6 +5,7 @@ import axios from 'axios';
 import InfoBar from './InfoBar';
 
 import './component.css';
+import { Link } from 'react-router-dom';
 
 function DashboardUnit({ room, roomReference, socket }) {
   const [recentMessage, setRecentMessage] = useState('');
@@ -45,9 +46,10 @@ function DashboardUnit({ room, roomReference, socket }) {
 
   return(
     <div className="roomContainer">
-      {/* <h1>{roomReference}</h1> */}
-      <InfoBar room={""} roomReference={roomReference}/>
+      <Link to={`/chat?room=${room}&reference=${roomReference}`}>
+        <InfoBar room={""} roomReference={roomReference}/>
         <p className="recentMessage">{recentMessage ? recentMessage : "None"}</p>
+      </Link>
     </div>
   )
 }

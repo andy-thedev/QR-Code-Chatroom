@@ -1,11 +1,9 @@
 import React from 'react';
 
-import onlineIcon from '../icons/onlineIcon.png';
-
 import './component.css';
 
-const TextContainer = ({ room, roomReference }) => (
-  <div className="textContainer">
+function TextContainer({ room, roomReference }) {
+  return <div className="textContainer">
     <div>
       {<h1>Welcome to {room} {roomReference}</h1>}
       <div style={{marginTop: "5rem"}}>
@@ -20,26 +18,7 @@ const TextContainer = ({ room, roomReference }) => (
         </p>
       </div>
     </div>
-    {/* {
-      users
-        ? (
-          <div>
-            <h1>Users currently chatting:</h1>
-            <div className="activeContainer">
-              <h2>
-                {users.map(({name}) => (
-                  <div key={name} className="activeItem">
-                    {name}
-                    <img alt="Online Icon" src={onlineIcon}/>
-                  </div>
-                ))}
-              </h2>
-            </div>
-          </div>
-        )
-        : null
-    } */}
   </div>
-);
+};
 
 export default TextContainer;

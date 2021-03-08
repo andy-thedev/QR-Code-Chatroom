@@ -6,10 +6,10 @@ import Message from './Message';
 
 import './component.css';
 
-const Messages = ({ messages, currentUser }) => (
-  <ScrollToBottom className="messages">
+function Messages({ messages, currentUser }) {
+  return <ScrollToBottom className="messages">
     {messages.map((message, i) => <div key={i}><Message message={message} currentUser={currentUser}/></div>)}
   </ScrollToBottom>
-);
+};
 
 export default Messages;

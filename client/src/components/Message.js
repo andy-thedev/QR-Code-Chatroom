@@ -3,10 +3,10 @@ import ReactEmoji from 'react-emoji';
 
 import './component.css';
 
-const Message = ({ message: { text, user }, currentUser }) => {
+function Message({ message: { text, user }, currentUser }) {
   let isSentByCurrentUser = false;
 
-  if(user === currentUser) {
+  if (user === currentUser) {
     isSentByCurrentUser = true;
   }
 

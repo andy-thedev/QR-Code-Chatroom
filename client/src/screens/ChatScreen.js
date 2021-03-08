@@ -11,7 +11,7 @@ import Input from '../components/Input';
 
 import './screen.css';
 
-const ChatScreen = () => {
+function ChatScreen() {
   const location = useLocation();
 
   const [socket, setSocket] = useState(null);
