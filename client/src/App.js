@@ -10,6 +10,7 @@ import LoginScreen from './screens/LoginScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import ChatScreen from './screens/ChatScreen';
 import OwnerChatScreen from './screens/OwnerChatScreen';
+import ManageRoomsScreen from './screens/ManageRoomsScreen';
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/dashboard" component={DashboardScreen}/>
         <Route path="/chat" component = {ChatScreen}/>
         <Route path="/ownerchat" component={OwnerChatScreen}/>
+        <Route path="/manage/rooms" component={ManageRoomsScreen}/>
       </BrowserRouter>
     </div>
   );

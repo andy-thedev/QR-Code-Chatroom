@@ -27,6 +27,9 @@ function NavigationBar(props) {
                     <Link to={"/register"}>Register</Link>
                 </div>
                 <div className="navbar-items">
+                    <Link to={"/manage/rooms"}>Manage</Link>
+                </div>
+                <div className="navbar-items">
                     <Link to={"/"}>Join</Link>
                 </div>
                 <div className="navbar-items">
