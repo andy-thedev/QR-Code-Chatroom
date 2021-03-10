@@ -49,3 +49,6 @@ Logged in admins can access the dashboard, showing an overview of all chatrooms 
 Admins(ie: restaurant owners) may select individual chatrooms(ie: tables) on the dashboard to read, and reply to messages sent by users(ie: customers)
 
 (The application architecture was designed to maximize user-friendliness and minimize barrier to entry)
+
+**Feature 4**
+Logged in admins can create/edit/delete rooms from the management page.
