@@ -11,7 +11,7 @@ router.get("/:owner", isAuth, async(req, res) => {
     const ownerEmail = req.params.owner;
     const rooms = await Chatroom.find({ownerEmail});
     res.send(rooms);
-})
+});
 
 router.post("/", isAuth, async(req, res) => {
     const { room, ownerEmail, numRooms } = req.body;
@@ -45,6 +45,36 @@ router.post("/", isAuth, async(req, res) => {
     res.json({
         message: `${numRooms} ${room} have been created successfully!`,
     })
+});
+
+router.put('/:id', isAuth, async(req, res) => {
+    const room = await Chatroom.findById(req.params.id);
+    if (room) {
+        room.room = req.body.roomName;
+        room.roomReference = req.body.roomReference;
+        const updatedRoom = await room.save();
+        if (updatedRoom) {
+            res.send({message: 'Room was updated'});
+        } else {
+            res.send({message: 'Error in updating'});
+        }
+    } else {
+        res.send({message: 'Could not find room to be updated'});
+    }
+});
+
+router.delete('/:id', isAuth, async(req, res) => {
+    const room = await Chatroom.findById(req.params.id);
+    if (room) {
+        const deletedRoom = await room.remove();
+        if (deletedRoom) {
+            res.send({message: 'Room was deleted'});
+        } else {
+            res.send({message: 'Error in deletion'})
+        }
+    } else {
+        res.send({message: 'Could not find room to be deleted'});
+    }
 });
 
 module.exports = router;

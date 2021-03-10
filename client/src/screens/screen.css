@@ -153,6 +153,16 @@ th, td {
   word-wrap: break-word;
 }
 
+.manage-button {
+  font-size: 1rem;
+  margin: 0.2rem;
+  border: none;
+}
+
+.manage-button:hover {
+  background: #2979FF;
+}
+
 @media (max-width: 480px) {
   .joinInnerContainer {
     width: 90%;
